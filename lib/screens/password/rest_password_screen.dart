@@ -2,12 +2,10 @@ import 'package:api_secand_project/api/controllers/student_auth_api_controller.d
 import 'package:api_secand_project/models/api_response.dart';
 import 'package:api_secand_project/widgets/text_feild_code.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as devtool show log;
 
 class RestPasswordScreen extends StatefulWidget {
-  const RestPasswordScreen({
-    Key? key,
-    required this.email
-  }) : super(key: key);
+  const RestPasswordScreen({Key? key, required this.email}) : super(key: key);
 
   final String email;
 
@@ -33,7 +31,6 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _newPasswordEditingController = TextEditingController();
     _confirmationPasswordEditingController = TextEditingController();
@@ -49,7 +46,6 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _newPasswordEditingController.dispose();
     _confirmationPasswordEditingController.dispose();
     _firstCodeTextController.dispose();
@@ -96,7 +92,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
                     }
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 CodeTextField(
@@ -110,7 +106,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
                     }
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 CodeTextField(
@@ -124,7 +120,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
                     }
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 CodeTextField(
@@ -138,7 +134,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             TextField(
@@ -146,7 +142,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
               keyboardType: TextInputType.text,
               obscuringCharacter: '*',
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'New Password',
               ),
             ),
@@ -183,10 +179,10 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
   }
 
   void preformRestPassword() {
-    if (checkData()&&checkCode()) {
+    if (checkData() && checkCode()) {
       _RestPassword();
-      showSnackBar(message: 'Now your reset your password!',error: false);
-      print('true');
+      showSnackBar(message: 'Now your reset your password!', error: false);
+      devtool.log('true');
     }
   }
 
@@ -196,7 +192,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
         content: Text(message),
         backgroundColor: error ? Colors.red : Colors.green,
         behavior: SnackBarBehavior.floating,
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       ),
     );
   }
@@ -215,7 +211,7 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
 
   bool checkAllData() {
     if (checkData() && checkCode()) {
-      print('true ture');
+      devtool.log('true ture');
       return true;
     }
     return false;
@@ -226,7 +222,6 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
         _newPasswordEditingController.text.isNotEmpty) {
       if (_newPasswordEditingController.text ==
           _confirmationPasswordEditingController.text) {
-
         return true;
       } else {
         showSnackBar(
@@ -250,11 +245,16 @@ class _RestPasswordScreenState extends State<RestPasswordScreen> {
     return false;
   }
 
+  // ignore: non_constant_identifier_names
   void _RestPassword() async {
-    ApiResponse apiResponse=await StudentAuthApiController().restPassword(email: widget.email, password: _newPasswordEditingController.text, code: _code);
-    showSnackBar(message: apiResponse.message,error: !apiResponse.status);
-    if(apiResponse.status){
-    Navigator.pushReplacementNamed(context, '/login_screen');
+    ApiResponse apiResponse = await StudentAuthApiController().restPassword(
+        email: widget.email,
+        password: _newPasswordEditingController.text,
+        code: _code);
+    showSnackBar(message: apiResponse.message, error: !apiResponse.status);
+    if (apiResponse.status) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacementNamed(context, '/login_screen');
     }
   }
 }

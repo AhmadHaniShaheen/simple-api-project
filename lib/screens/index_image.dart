@@ -29,7 +29,7 @@ class _IndexImagesState extends State<IndexImages> {
         init: ImagesGetxController(),
         global: true,
         builder: (controller) {
-          print(controller.images.length);
+          devtool.log(controller.images.length.toString());
           if (controller.loading.isTrue) {
             return const Center(
               child: CircularProgressIndicator(),

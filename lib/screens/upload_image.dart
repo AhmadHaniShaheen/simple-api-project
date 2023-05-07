@@ -75,11 +75,11 @@ class _UploadImageState extends State<UploadImage> {
   }
 
   void _pickerImage() async {
-    XFile? _selectedImage = await _imagePicker.pickImage(
+    XFile? selectedImage = await _imagePicker.pickImage(
         source: ImageSource.camera, imageQuality: 80);
-    if (_selectedImage != null) {
+    if (selectedImage != null) {
       setState(() {
-        _pickedImage = _selectedImage;
+        _pickedImage = selectedImage;
       });
     }
   }

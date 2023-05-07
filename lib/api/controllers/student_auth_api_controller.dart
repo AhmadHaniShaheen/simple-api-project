@@ -4,8 +4,9 @@ import 'package:api_secand_project/api/api_setting.dart';
 import 'package:api_secand_project/helper/api_responce.dart';
 import 'package:api_secand_project/models/api_response.dart';
 import 'package:api_secand_project/models/strudent.dart';
-import 'package:api_secand_project/storage/sharedPrefController.dart';
+import 'package:api_secand_project/storage/shared_pref_controller.dart';
 import 'package:http/http.dart' as http;
+import 'dart:developer' as devtool show log;
 
 class StudentAuthApiController with ApiHeaderResponse {
   Future<ApiResponse> login(
@@ -53,12 +54,12 @@ class StudentAuthApiController with ApiHeaderResponse {
     if (response.statusCode == 200 || response.statusCode == 400) {
       var jsonResponse = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        print('Code: ${jsonResponse['code']}');
+        devtool.log('Code: ${jsonResponse['code']}');
       }
       return ApiResponse(
           status: jsonResponse['status'], message: jsonResponse['message']);
     } else {
-      print('big error');
+      devtool.log('big error');
       return ApiResponse(status: false, message: 'server handel error');
     }
   }
@@ -79,7 +80,7 @@ class StudentAuthApiController with ApiHeaderResponse {
       return ApiResponse(
           status: jsonResponse['status'], message: jsonResponse['message']);
     } else {
-      print('big error');
+      devtool.log('big error');
       return ApiResponse(status: false, message: 'server handel error');
     }
   }

@@ -16,6 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController _emailEditingController;
   late TextEditingController _passwordEditingController;
 
+  // ignore: prefer_final_fields
   String _gender = "M";
 
   @override

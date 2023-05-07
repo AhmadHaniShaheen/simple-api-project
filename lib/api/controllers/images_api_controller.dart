@@ -5,7 +5,7 @@ import 'package:api_secand_project/api/api_setting.dart';
 import 'package:api_secand_project/helper/api_responce.dart';
 import 'package:api_secand_project/models/api_response.dart';
 import 'package:api_secand_project/models/studen_image.dart';
-import 'package:api_secand_project/storage/sharedPrefController.dart';
+import 'package:api_secand_project/storage/shared_pref_controller.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as devtool show log;
 

@@ -5,7 +5,7 @@ import 'package:api_secand_project/screens/password/forget_password_screen.dart'
 import 'package:api_secand_project/screens/register_screen.dart';
 import 'package:api_secand_project/screens/upload_image.dart';
 import 'package:api_secand_project/screens/users_screen.dart';
-import 'package:api_secand_project/storage/sharedPrefController.dart';
+import 'package:api_secand_project/storage/shared_pref_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
