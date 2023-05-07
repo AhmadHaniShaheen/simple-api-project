@@ -5,7 +5,8 @@ class CodeTextField extends StatelessWidget {
   final TextEditingController textController;
   final void Function(String value) onChanged;
 
-  CodeTextField({
+  const CodeTextField({
+    super.key,
     required this.focusNodeNumber,
     required this.textController,
     required this.onChanged,
@@ -21,7 +22,7 @@ class CodeTextField extends StatelessWidget {
         textAlign: TextAlign.center,
         focusNode: focusNodeNumber,
         onChanged: onChanged,
-        style: TextStyle(fontSize: 25),
+        style: const TextStyle(fontSize: 25),
         decoration: const InputDecoration(
           counterText: '',
           enabledBorder: OutlineInputBorder(

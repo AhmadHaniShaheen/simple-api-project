@@ -4,6 +4,7 @@ import 'package:api_secand_project/get/images_getx_controller.dart';
 import 'package:api_secand_project/models/api_response.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:developer' as devtool show log;
 
 class UploadImage extends StatefulWidget {
   const UploadImage({Key? key}) : super(key: key);
@@ -28,8 +29,8 @@ class _UploadImageState extends State<UploadImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Upload Image'),
-        actions: [
+        title: const Text('Upload Image'),
+        actions: const [
           Icon(Icons.camera),
           SizedBox(
             width: 8,
@@ -50,7 +51,7 @@ class _UploadImageState extends State<UploadImage> {
                       onPressed: () {
                         _pickerImage();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.camera_enhance,
                         size: 32,
                       ),
@@ -62,10 +63,10 @@ class _UploadImageState extends State<UploadImage> {
             onPressed: () async {
               await preformUpload();
             },
-            icon: Icon(Icons.upload),
-            label: Text('Upload'),
+            icon: const Icon(Icons.upload),
+            label: const Text('Upload'),
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(double.infinity, 50),
+              minimumSize: const Size(double.infinity, 50),
             ),
           ),
         ],
@@ -86,7 +87,7 @@ class _UploadImageState extends State<UploadImage> {
   Future<void> preformUpload() async {
     if (_checkData()) {
       await uploadImage();
-      print('is thire any image? ${_pickedImage}');
+      devtool.log('is thire any image? $_pickedImage');
     }
   }
 
@@ -95,7 +96,7 @@ class _UploadImageState extends State<UploadImage> {
       return true;
     }
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Upload image failed')));
+        .showSnackBar(const SnackBar(content: Text('Upload image failed')));
     return false;
   }
 
@@ -120,7 +121,7 @@ class _UploadImageState extends State<UploadImage> {
           setState(() {
             _progressValue = apiResponse.status ? 1 : 0;
           });
-          print('here is the status code == ${apiResponse.status}');
+          devtool.log('here is the status code == ${apiResponse.status}');
           showSnackBar(
               message: apiResponse.message, error: !apiResponse.status);
         });

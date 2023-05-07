@@ -7,6 +7,7 @@ import 'package:api_secand_project/screens/upload_image.dart';
 import 'package:api_secand_project/screens/users_screen.dart';
 import 'package:api_secand_project/storage/sharedPrefController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       initialRoute: '/launch_screen',
       routes: {

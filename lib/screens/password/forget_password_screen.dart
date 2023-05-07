@@ -1,7 +1,6 @@
 import 'package:api_secand_project/api/controllers/student_auth_api_controller.dart';
 import 'package:api_secand_project/models/api_response.dart';
 import 'package:api_secand_project/screens/password/rest_password_screen.dart';
-import 'package:api_secand_project/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -16,14 +15,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _emailEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _emailEditingController.dispose();
 
     super.dispose();
@@ -53,7 +50,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             TextField(
               controller: _emailEditingController,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Email',
               ),
             ),
@@ -64,9 +61,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               onPressed: () {
                 preformForgetPassword();
               },
-              child: Text('SEND CODE'),
               style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50)),
+                  minimumSize: const Size(double.infinity, 50)),
+              child: const Text('SEND CODE'),
             ),
           ],
         ),
@@ -103,6 +100,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         .forgetPassword(email: _emailEditingController.text);
     showSnackBar(message: apiResponse.message, error: !apiResponse.status);
     if (apiResponse.status) {
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

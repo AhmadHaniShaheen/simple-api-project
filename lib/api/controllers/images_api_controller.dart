@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:api_secand_project/api/api_setting.dart';
 import 'package:api_secand_project/helper/api_responce.dart';
@@ -8,14 +7,14 @@ import 'package:api_secand_project/models/api_response.dart';
 import 'package:api_secand_project/models/studen_image.dart';
 import 'package:api_secand_project/storage/sharedPrefController.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer' as devtool show log;
 
 class ImagesApiController with ApiHeaderResponse {
   Future<List<StudentImage>> getImages() async {
     Uri uri = Uri.parse(ApiSetting.images.replaceFirst('/{id}', ''));
-    print('uri= ${uri}');
+    devtool.log('uri= $uri');
     var response = await http.get(uri, headers: header);
-    print('status code images =${response.statusCode}');
+    devtool.log('status code images =${response.statusCode}');
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
@@ -34,7 +33,9 @@ class ImagesApiController with ApiHeaderResponse {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       return ApiResponse(
-          status: jsonResponse['status'], message: jsonResponse['message'],);
+        status: jsonResponse['status'],
+        message: jsonResponse['message'],
+      );
     } else if (response.statusCode == 404) {
       return ApiResponse(status: false, message: 'Image Not found');
     } else {
@@ -47,11 +48,12 @@ class ImagesApiController with ApiHeaderResponse {
     var request = http.MultipartRequest('POST', uri);
     var imageFile = await http.MultipartFile.fromPath('image', path);
     request.files.add(imageFile);
-    request.headers[HttpHeaders.authorizationHeader]=SharedPrefController().getValue<String>(key: prefKeys.token.name)!;
-    request.headers[HttpHeaders.acceptHeader]='application/json';
+    request.headers[HttpHeaders.authorizationHeader] =
+        SharedPrefController().getValue<String>(key: PrefKeys.token.name)!;
+    request.headers[HttpHeaders.acceptHeader] = 'application/json';
 
     var response = await request.send();
-    print(response);
+    devtool.log(response.toString());
     // response.stream.transform(utf8.decoder).listen((String body) { });
     return response;
   }

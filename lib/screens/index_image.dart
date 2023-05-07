@@ -2,7 +2,7 @@ import 'package:api_secand_project/get/images_getx_controller.dart';
 import 'package:api_secand_project/models/api_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'dart:developer' as devtool show log;
 
 class IndexImages extends StatefulWidget {
   const IndexImages({Key? key}) : super(key: key);
@@ -16,13 +16,13 @@ class _IndexImagesState extends State<IndexImages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Images'),
+        title: const Text('Images'),
         actions: [
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/upload_image');
               },
-              icon: Icon(Icons.broken_image))
+              icon: const Icon(Icons.broken_image))
         ],
       ),
       body: GetX<ImagesGetxController>(
@@ -30,16 +30,15 @@ class _IndexImagesState extends State<IndexImages> {
         global: true,
         builder: (controller) {
           print(controller.images.length);
-          if(controller.loading.isTrue){
-            return Center(
+          if (controller.loading.isTrue) {
+            return const Center(
               child: CircularProgressIndicator(),
             );
-          }
-          else if (controller.images.isNotEmpty) {
+          } else if (controller.images.isNotEmpty) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 5,
                   mainAxisSpacing: 10,
@@ -61,7 +60,7 @@ class _IndexImagesState extends State<IndexImages> {
                           alignment: Alignment.bottomCenter,
                           child: Container(
                             height: 40,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.black45,
                             ),
                             child: Padding(
@@ -70,7 +69,7 @@ class _IndexImagesState extends State<IndexImages> {
                               ),
                               child: Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                       child: Text(
                                     'to show data and test to show data and test to show data and test',
                                     style: TextStyle(
@@ -81,7 +80,7 @@ class _IndexImagesState extends State<IndexImages> {
                                     onPressed: () {
                                       deleteImage(index: index);
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.delete,
                                       color: Colors.white,
                                     ),
@@ -99,7 +98,7 @@ class _IndexImagesState extends State<IndexImages> {
               ),
             );
           } else {
-            return Text('No Data');
+            return const Text('No Data');
           }
         },
       ),
@@ -109,14 +108,14 @@ class _IndexImagesState extends State<IndexImages> {
   Future<void> deleteImage({required int index}) async {
     ApiResponse apiResponse =
         await ImagesGetxController.to.deleteImage(index: index);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(apiResponse.status
-              ? 'Delete Image successfully'
-              : 'Deleted  failed'),
-          backgroundColor: apiResponse.status? Colors.green:Colors.red,
-        ),
-      );
-    
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(apiResponse.status
+            ? 'Delete Image successfully'
+            : 'Deleted  failed'),
+        backgroundColor: apiResponse.status ? Colors.green : Colors.red,
+      ),
+    );
   }
 }

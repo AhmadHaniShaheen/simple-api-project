@@ -1,4 +1,3 @@
-import 'package:api_secand_project/api/controllers/student_auth_api_controller.dart';
 import 'package:api_secand_project/api/controllers/user_api_controller.dart';
 import 'package:api_secand_project/models/user.dart';
 import 'package:api_secand_project/storage/sharedPrefController.dart';
@@ -12,33 +11,35 @@ class UsersScreen extends StatefulWidget {
 }
 
 class _UsersScreenState extends State<UsersScreen> {
-
-  List<User> _users=<User>[];
+  List<User> _users = <User>[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Users'),
+          title: const Text('Users'),
           actions: [
-            IconButton(onPressed: (){
-               Navigator.pushNamed(context, '/index_image');
-            }, icon: Icon(Icons.image)),
-            IconButton(onPressed: (){
-              SharedPrefController().clear();
-              Navigator.pushNamed(context, '/login_screen');
-              // StudentAuthApiController().logout();
-            }, icon: Icon(Icons.logout))
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/index_image');
+                },
+                icon: const Icon(Icons.image)),
+            IconButton(
+                onPressed: () {
+                  SharedPrefController().clear();
+                  Navigator.pushNamed(context, '/login_screen');
+                  // StudentAuthApiController().logout();
+                },
+                icon: const Icon(Icons.logout))
           ],
         ),
         body: FutureBuilder<List<User>>(
           builder: (context, snapshot) {
-            if(snapshot.connectionState == ConnectionState.waiting){
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            else if(snapshot.hasData){
-              _users=snapshot.data!;
+            } else if (snapshot.hasData) {
+              _users = snapshot.data!;
               return ListView.builder(
                 itemCount: _users.length,
                 itemBuilder: (context, index) {
@@ -46,20 +47,23 @@ class _UsersScreenState extends State<UsersScreen> {
                     leading: CircleAvatar(
                       radius: 30,
                       // child: NetworkImage(snapshot.data!.),
-                      backgroundImage:NetworkImage(_users[index].image) ,
+                      backgroundImage: NetworkImage(_users[index].image),
                     ),
                     title: Text(_users[index].firstName),
                     subtitle: Text(_users[index].mobile),
                   );
                 },
               );
-            }
-            else{
-              return Center(child: Text('No Data',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 28),),);
+            } else {
+              return const Center(
+                child: Text(
+                  'No Data',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                ),
+              );
             }
           },
           future: UserApiController().getUser(),
-
         ));
   }
 }

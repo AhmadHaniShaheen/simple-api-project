@@ -2,6 +2,7 @@ import 'package:api_secand_project/api/controllers/student_auth_api_controller.d
 import 'package:api_secand_project/models/api_response.dart';
 import 'package:api_secand_project/models/strudent.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as devtool show log;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -19,7 +20,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _fullNameEditingController = TextEditingController();
     _emailEditingController = TextEditingController();
@@ -28,7 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _fullNameEditingController.dispose();
     _emailEditingController.dispose();
     _passwordEditingController.dispose();
@@ -56,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             TextField(
               controller: _fullNameEditingController,
               keyboardType: TextInputType.name,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Full Name',
               ),
             ),
@@ -66,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             TextField(
               controller: _emailEditingController,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Email',
               ),
             ),
@@ -78,27 +77,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
               keyboardType: TextInputType.text,
               obscureText: true,
               obscuringCharacter: '*',
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Password',
               ),
             ),
             const SizedBox(
               height: 8,
             ),
-
             const SizedBox(
               height: 16,
             ),
             ElevatedButton(
               onPressed: () {
-                print(_gender);
-                print(_emailEditingController.text);
-                print(_passwordEditingController.text);
+                devtool.log(_gender);
+                devtool.log(_emailEditingController.text);
+                devtool.log(_passwordEditingController.text);
                 preformRegister();
               },
-              child: const Text('REGISTER'),
               style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50)),
+                  minimumSize: const Size(double.infinity, 50)),
+              child: const Text('REGISTER'),
             ),
           ],
         ),
@@ -137,6 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await StudentAuthApiController().register(student);
     showSnackBar(message: apiResponse.message, error: !apiResponse.status);
     if (apiResponse.status) {
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
     }
   }
